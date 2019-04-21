@@ -98,7 +98,7 @@ class Game:
 
 
 if __name__ == "__main__":
-    game = Game(name="ADVENTURE QUEST!")
+    game = Game(name="ADVENTURE QUEST")
     game.init_game()
     while True:
         game.manage_turn()
