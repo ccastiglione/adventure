@@ -3,7 +3,7 @@ import os
 import errno
 import direction
 import result
-from result import Success, Failure, Result
+from result import Success, Failure, Result, WON_GAME
 from schema import Scope, Role, Schema
 from traits import Traits
 from item import Item
@@ -649,19 +649,17 @@ class Config:
                 metal_gate.traits.closed = False
                 return result.GENERIC_SUCCESS
 
-        fabulous_prize = Success("The massive gate swings open revealing a FABULOUS PRIZE!")
+        unlock.add_consequence(
+            schema=Schema(roles={Role.AGENT: player, Role.THEME: golden_lock, Role.INSTRUMENT: golden_key}),
+            necessary_result=result.GENERIC_SUCCESS,
+            effect=lambda schema: unlock_gate(golden_lock, bronze_lock),
+            consequent_result=WON_GAME)
 
         unlock.add_consequence(
             schema=Schema(roles={Role.AGENT: player, Role.THEME: golden_lock, Role.INSTRUMENT: golden_key}),
             necessary_result=result.GENERIC_SUCCESS,
             effect=lambda schema: unlock_gate(golden_lock, bronze_lock),
-            consequent_result=fabulous_prize)
-
-        unlock.add_consequence(
-            schema=Schema(roles={Role.AGENT: player, Role.THEME: golden_lock, Role.INSTRUMENT: golden_key}),
-            necessary_result=result.GENERIC_SUCCESS,
-            effect=lambda schema: unlock_gate(golden_lock, bronze_lock),
-            consequent_result=fabulous_prize)
+            consequent_result=WON_GAME)
 
         # Start game in crumbly room
         return crumbly_room
