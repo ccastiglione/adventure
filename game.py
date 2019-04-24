@@ -1,7 +1,7 @@
 from collections import deque
 from creature import Creature
 from vocabulary import Vocabulary
-from result import Success
+from result import Success, WON_GAME
 from config import Config
 from command import Command
 from route import ConsoleRoute
@@ -94,7 +94,10 @@ class Game:
             if len(self.command_history) > Game.HISTORY_LENGTH:
                 self.command_history.popleft()
             self.route.send_output(result.message)
-            self.update_game()
+            if result == WON_GAME:
+                exit(0)
+            else:
+                self.update_game()
 
 
 if __name__ == "__main__":

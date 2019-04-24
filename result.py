@@ -90,3 +90,5 @@ class AmbiguousNounFailure(Failure):
 
 GENERIC_SUCCESS = Success("Success")
 GENERIC_FAILURE = Failure("Failure")
+WON_GAME = Success("You have won!  Congratulations!")
+
